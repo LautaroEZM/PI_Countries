@@ -1,31 +1,22 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCountries } from '../store/actions';
-import axios from 'axios';
+import { useEffect } from "react";
+import { getCountries, toggleForm, setCurrentPage } from "../store/actions";
+import { useAppDispatch, useAppSelector } from "../redux-hooks.js";
+import style from "./List.module.css";
+import SearchBar from "../components/searchBar/searchBar";
+
 
 function List() {
-  const dispatch = useDispatch();
-  const countries = useSelector((state) => state.countries);
-
+  const dispatch = useAppDispatch();
+  const countries = useAppSelector((state) => state.countries);
   useEffect(() => {
-    axios.get('http://localhost:3001/countries')
-      .then((response) => {
-        dispatch(setCountries(response.data));
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    dispatch(getCountries());
   }, [dispatch]);
 
   return (
-    <div>
-      <h2>Lista</h2>
-      <ul>
-        {countries.map((country) => (
-          <li key={countries.id}>{countries.name}</li>
-        ))}
-      </ul>
+    <div className={style.firstContainer}>
+      <div className={style.topContainer}><SearchBar/></div>
     </div>
+    
   );
 }
 

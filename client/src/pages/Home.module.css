@@ -1,0 +1,28 @@
+.homeButton {
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #fec104;
+  color: black;
+  padding: 12px 20px; /* Ajusta el tamaño del botón */
+  border-radius: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Agrega transición a la sombra */
+
+  /* Agrega una sombra */
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.homeButton:hover {
+  background-color: #8b6c0c;
+  color: black;
+  text-decoration: none;
+}
+
+.homeButton:active {
+  background-color: #634d0b;
+  color: white;
+  text-decoration: none;
+}
+
+.homeButton span {
+  display: inline-block;
+}

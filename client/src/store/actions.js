@@ -1,7 +1,7 @@
-import axios from 'axios';
-export const GET_COUNTRIES = 'GET_COUNTRIES';
-export const TOGGLE_FORM = 'TOGGLE_FORM';
-export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+import axios from "axios";
+export const GET_COUNTRIES = "GET_COUNTRIES";
+export const TOGGLE_FORM = "TOGGLE_FORM";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
 export const getCountries = () => {
   const endpoint = 'http://localhost:3001/countries';
@@ -18,7 +18,7 @@ export const getCountries = () => {
 export const setCurrentPage = (pageNumber) => {
   return (dispatch) => {
     return dispatch({
-      type: 'SET_CURRENT_PAGE',
+      type: "SET_CURRENT_PAGE",
       payload: pageNumber,
     });
   };
@@ -27,8 +27,7 @@ export const setCurrentPage = (pageNumber) => {
 export const toggleForm = () => {
   return (dispatch) => {
     return dispatch({
-      type: 'TOGGLE_FORM',
+      type: "TOGGLE_FORM",
     });
   };
 };
-
