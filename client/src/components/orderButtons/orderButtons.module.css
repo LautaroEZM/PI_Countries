@@ -1,0 +1,13 @@
+/* orderButtons.module.css */
+.orderButtonsContainer {
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  /* Estilos para el nuevo botón */
+  .orderButtonsContainer > button {
+    height: 30px;
+    margin-left: -1px;
+    margin: 5px;
+  }

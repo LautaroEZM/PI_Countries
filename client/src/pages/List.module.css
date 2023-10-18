@@ -1,5 +1,79 @@
 .firstContainer {
-    background-color: red;
-    width: 100%;
-    height: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.topContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: #272727;
+}
+
+.coloredDiv {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  margin: 0 10px;
+}
+
+.coloredDivRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  margin: 0 10px;
+}
+
+.coloredDiv:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.coloredDiv:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.coloredDivRight:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.botContainer {
+  display: flex;
+  height: calc(100% - 50px); /* Restar la altura del topContainer */
+}
+
+.filterContainer {
+  width: 20%;
+  height: 100%;
+  border: 1px solid red;
+  background-color: #212121
+}
+
+.cardContainer {
+  flex: 1;
+  height: 100%;
+  border: 1px solid blue;
 }

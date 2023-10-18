@@ -1,27 +1,34 @@
+// searchBar.jsx
 import React from "react";
-import button from "./"
+import CustomButton from "../button/button";
+import styles from "./searchBar.module.css";
+import searchIcon from '../../img/lupa.png';
 
-const searchBar = () => {
+const SearchBar = () => {
   const handleSearch = (event) => {
-    // Aquí puedes manejar la lógica de búsqueda
     console.log("Texto de búsqueda:", event.target.value);
   };
 
   const handleButtonClick = () => {
-    // Aquí puedes manejar la acción del botón de búsqueda
     console.log("Botón de búsqueda clickeado");
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Buscar..."
-        onChange={handleSearch}
-      />
-      <button onClick={handleButtonClick}>Buscar</button>
+    <div className={styles.searchBarContainer}>
+      <div className={styles.searchBar}>
+        <input
+          className={styles.textArea}
+          placeholder={"Ingresa el país que desea buscar..."}
+          type="search"
+          onChange={handleSearch}
+        />
+        <CustomButton
+          content={<img src={searchIcon} alt="Search" style={{ width: "20px", height: "20px" }} />}
+          onClick={handleButtonClick}
+        />
+      </div>
     </div>
   );
 };
 
-export default searchBar;
+export default SearchBar;

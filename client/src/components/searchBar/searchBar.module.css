@@ -1,0 +1,49 @@
+.searchBarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+}
+
+.textArea {
+    background-color: #ffffff;
+    border-radius: 7px 0 0 7px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    outline: none;
+    height: 30px;
+    color: black;
+    /* Ajusta la altura según sea necesario */
+    box-sizing: border-box;
+    /* Incluye el padding y el borde en el tamaño total */
+}
+
+/* Ajusta según sea necesario */
+.textArea:hover {
+    border-color: #666;
+    border: 1px solid #ccc;
+}
+
+/* Ajusta según sea necesario */
+.textArea:focus {
+    border-color: #333;
+    border: 1px solid #ccc;
+}
+
+/* Ajusta según sea necesario */
+.textArea::placeholder {
+    color: #aaa;
+}
+
+/* Estilos para el nuevo botón */
+.searchBar>button {
+    border-radius: 0 7px 7px 0;
+    margin-left: -1px;
+    /* Ajusta según sea necesario para eliminar el espacio entre el input y el botón */
+    height: 30px;
+    /* Ajusta la altura según sea necesario, debe coincidir con la altura del input */
+}

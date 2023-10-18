@@ -3,12 +3,12 @@
   cursor: pointer;
   background-color: #fec104;
   color: black;
-  padding: 12px 20px; /* Ajusta el tamaño del botón */
+  padding: 12px 20px;
   border-radius: 10px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Agrega transición a la sombra */
-
-  /* Agrega una sombra */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0; /* Establece la opacidad inicial en 0 */
+  animation: fadeIn 1s forwards; /* Usa la animación fadeIn */
 }
 
 .homeButton:hover {
@@ -25,4 +25,23 @@
 
 .homeButton span {
   display: inline-block;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Opacidad inicial */
+  }
+  to {
+    opacity: 1; /* Opacidad final */
+  }
 }
