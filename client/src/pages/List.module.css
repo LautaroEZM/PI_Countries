@@ -2,6 +2,8 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
 
@@ -10,10 +12,6 @@
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   height: 50px;
   background-color: #272727;
 }
@@ -62,18 +60,78 @@
 
 .botContainer {
   display: flex;
-  height: calc(100% - 50px); /* Restar la altura del topContainer */
+  flex: 1;
 }
 
 .filterContainer {
   width: 20%;
-  height: 100%;
-  border: 1px solid red;
-  background-color: #212121
+  background-color: #212121;
+}
+
+.contentContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardContainer {
   flex: 1;
-  height: 100%;
-  border: 1px solid blue;
+}
+
+.cardRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: #2b2d31;
+  height: 60px;
+}
+
+.pagination button {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  border: none;
+  background: #2b2d31;
+  color: white;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 0px;
+  font-size: 20px;
+}
+
+.pagination button:hover {
+  background-color: rgb(228, 175, 28);
+  transition: background-color 0.2s;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  color: black;
+  font-weight: bold ;
+  border: 0px;
+}
+
+.pagination button.active {
+  background-color: rgb(228, 175, 28);
+  color: white;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  
+}
+
+.pagination button.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
 }

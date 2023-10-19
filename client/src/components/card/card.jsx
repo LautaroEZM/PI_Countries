@@ -1,17 +1,40 @@
-import { Link } from "react-router-dom";
-import style from "./card.module.css";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import style from './Card.module.css';
 
-export default function Card({ dog }) {
+export default function Card({ country }) {
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
 
-  return dog && (
-      <div className={style.card} key={dog.id}>
-        <Link to={`/detail/${dog.id}?source=${dog.source}`}><div className={style.textName}>{dog.name}</div></Link> {/*agregar un <p></p> y pasar el link a ese lugar*/}
-        <div className={style.imgContainer}><img className={style.profileImg} src={dog.image} alt="" /></div>
-        <div className={style.textStatus}>{`Altura: ${dog.height}`}</div>
-          <div className={style.textStatus}>{`Peso: ${dog.weight}`}</div>
-          <div className={style.textStatus}>{`Vida: ${dog.lifeSpan}`}</div>
-          <div className={style.textStatusTemp}>{`Temperamento: ${dog.temperament}`}</div>
+  const handleImageClick = () => {
+    setIsImageExpanded(!isImageExpanded);
+  };
+
+  return (
+    <div className={style.card} key={country.idCode}>
+      <div className={style.imgContainer}>
+        <img
+          className={style.profileImg}
+          src={country.imageFlag}
+          alt=""
+          onClick={handleImageClick}
+        />
+      </div>
+      <div className={style.textContainer}>
+        <Link to={`/country/${country.idCode}`}>
+          <div className={style.textName}>{country.name.toUpperCase()}</div>
+        </Link>
+        <div className={style.textStatus}>{`${country.capital}`}</div>
+        <div className={style.textStatus}>{`${country.continent}`}</div>
         <div className={style.botContainer}></div>
       </div>
+      {isImageExpanded && (
+        <div
+          className={style.expandedImage}
+          onClick={handleImageClick}
+        >
+          <img src={country.imageFlag} alt="" />
+        </div>
+      )}
+    </div>
   );
 }

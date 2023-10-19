@@ -1,25 +1,64 @@
 import axios from "axios";
 export const GET_COUNTRIES = "GET_COUNTRIES";
+export const GET_COUNTRY = "GET_COUNTRY";
 export const TOGGLE_FORM = "TOGGLE_FORM";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const GET_ACTIVITIES = "GET_ACTIVITIES";
+export const GET_ACTIVITY = "GET_ACTIVITY";
 
 export const getCountries = () => {
-  const endpoint = 'http://localhost:3001/countries';
+  const endpoint = "http://localhost:3001/countries";
   return (dispatch) => {
     axios.get(endpoint).then(({ data }) => {
       return dispatch({
-        type: 'GET_COUNTRIES',
+        type: "GET_COUNTRIES",
         payload: data,
       });
     });
   };
 };
 
-export const setCurrentPage = (pageNumber) => {
+export const getCountry = (countryCode) => {
+  const endpoint = `http://localhost:3001/countries/${countryCode}`;
+  return (dispatch) => {
+    axios.get(endpoint).then(({ data }) => {
+      return dispatch({
+        type: "GET_COUNTRY",
+        payload: data,
+      });
+    });
+  };
+};
+
+export const getActivities = () => {
+  const endpoint = "http://localhost:3001/activities";
+  return (dispatch) => {
+    axios.get(endpoint).then(({ data }) => {
+      return dispatch({
+        type: "GET_ACTIVITIES",
+        payload: data,
+      });
+    });
+  };
+};
+
+export const getActivity = (countryCode) => {
+  const endpoint = `http://localhost:3001/countries/${countryCode}`;
+  return (dispatch) => {
+    axios.get(endpoint).then(({ data }) => {
+      return dispatch({
+        type: "GET_ACTIVITY",
+        payload: data,
+      });
+    });
+  };
+};
+
+export const setCurrentPage = (page) => {
   return (dispatch) => {
     return dispatch({
       type: "SET_CURRENT_PAGE",
-      payload: pageNumber,
+      payload: page,
     });
   };
 };
