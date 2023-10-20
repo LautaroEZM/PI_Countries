@@ -13,7 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/list" element={<List />} />
-            <Route path="/country" element={<Country />} />
+            <Route path="/country:idCode" element={<Country />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
