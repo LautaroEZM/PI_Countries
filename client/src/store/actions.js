@@ -8,16 +8,20 @@ export const GET_ACTIVITY = "GET_ACTIVITY";
 export const ADD_ACTIVITY = "ADD_ACTIVITY";
 
 export const getCountries = () => {
-  const endpoint = "http://localhost:3001/countries";
-  return (dispatch) => {
-    axios.get(endpoint).then(({ data }) => {
-      return dispatch({
-        type: "GET_COUNTRIES",
-        payload: data,
+  return async (dispatch) => {
+    try {
+      const response = await axios.get("http://localhost:3001/countries");
+      dispatch({
+        type: GET_COUNTRIES,
+        payload: response.data,
       });
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 };
+
+
 
 export const getCountry = (countryCode) => {
   const endpoint = `http://localhost:3001/countries/${countryCode}`;
