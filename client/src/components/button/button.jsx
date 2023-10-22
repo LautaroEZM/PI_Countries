@@ -1,4 +1,3 @@
-// button.jsx
 import React from "react";
 import style from './button.module.css';
 

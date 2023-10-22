@@ -12,8 +12,6 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    default:
-      return { ...state };
     case GET_COUNTRIES:
       return { ...state, countries: action.payload };
     case GET_COUNTRY:
@@ -26,6 +24,8 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, currentPage: action.payload };
     case TOGGLE_FORM:
       return { ...state, visibleForm: !state.visibleForm };
+    default:
+      return { ...state };
   }
 };
 

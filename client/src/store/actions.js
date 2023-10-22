@@ -5,6 +5,7 @@ export const TOGGLE_FORM = "TOGGLE_FORM";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const GET_ACTIVITIES = "GET_ACTIVITIES";
 export const GET_ACTIVITY = "GET_ACTIVITY";
+export const ADD_ACTIVITY = "ADD_ACTIVITY";
 
 export const getCountries = () => {
   const endpoint = "http://localhost:3001/countries";
@@ -50,6 +51,21 @@ export const getActivity = (countryCode) => {
         type: "GET_ACTIVITY",
         payload: data,
       });
+    });
+  };
+};
+
+export const addActivity = (data) => {
+  const endpoint = 'http://localhost:3001/activities';
+  return (dispatch) => {
+    axios.post(endpoint, data).then(({ data }) => {
+      return dispatch({
+        type: 'ADD_ACTIVITY',
+        payload: data,
+      });
+    }).catch(error => {
+      console.error(error);
+      alert('No se pudo agregar el elemento');
     });
   };
 };

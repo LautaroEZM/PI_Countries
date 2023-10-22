@@ -2,57 +2,69 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import style from './Country.module.css';
-import { getCountry } from '../store/actions';
+import { getCountry, getActivities, getActivity } from '../store/actions'; // Importa getActivities y getActivity
 import { useNavigate } from 'react-router-dom';
+import CustomButton from '../components/button/button';
 
-function Country(props) {
-  const { country } = props;
-  const { idCode } = useParams(); // Obtener el idCode de los parámetros de la URL
-  const navigate = useNavigate(); // Obtener la función de navegación
+const Country = ({ country, getCountry, getActivities, getActivity }) => {
+  const { idCode } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Llama a la acción getCountry con el idCode para cargar los datos del país
-    props.getCountry(idCode);
-  }, [idCode, props]);
+    if (idCode) {
+      getCountry(idCode);
+      getActivities(); // Llama a getActivities para obtener la lista de actividades
+      getActivity(idCode); // Llama a getActivity para obtener detalles de la actividad para el país
+    }
+  }, [idCode, getCountry, getActivities, getActivity]);
 
-  const handleHomeClick = () => {
-    // Redirigir a la ruta "/"
-    navigate('/');
-  };
+  const handleHomeClick = () => navigate('/list');
 
-  return (
-    country && (
-      <div className={style.container}>
-        <div className={style.textName}>{country.name}</div>
-        <div className={style.inContainer}>
-          <div className={style.leftContainer}>
-          </div>
-          <div className={style.rightContainer}>
-            <div className={style.imgContainer}>
-              <img className={style.profileImg} src={country.image} alt="" />
+  return country && (
+    <div className={style.container}>
+      <div className={style.title}>{country.name}</div>
+      <div className={style.detailsContainer}>
+        <div className={style.leftContainer}>
+          <div className={style.textContainer}>
+            <div><b>Country Code:</b> {country.idCode}</div>
+            <div><b>Continent:</b> {country.continent}</div>
+            <div><b>Capital:</b> {country.capital}</div>
+            <div><b>Subregion:</b> {country.subregion ? country.subregion : 'Not specified'}</div>
+            <div><b>Area:</b> {country.area ? country.area : 'Not specified'}</div>
+            <div><b>Population:</b> {country.population}</div>
+
+            <div><b>Activities:</b>
+              <ul>
+                {Array.isArray(country.activities) ? (
+                  country.activities.map((activity, index) => (
+                    <li key={index}>{activity.name}</li>
+                  ))
+                ) : (
+                  <li>No activities available.</li>
+                )}
+              </ul>
             </div>
+
+
           </div>
         </div>
-        <button className={style.btnSearch} onClick={handleHomeClick}>
-          Home
-        </button>
+        <div className={style.rightContainer}>
+          <img className={style.imgFlag} src={country.imageFlag} alt={country.name} />
+        </div>
       </div>
-    )
+      <CustomButton onClick={handleHomeClick} content="BACK" />
+    </div>
   );
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getCountry: (idCode) => {
-      dispatch(getCountry(idCode));
-    },
-  };
 };
 
-const mapStateToProps = (state) => {
-  return {
-    country: state.country,
-  };
+const mapStateToProps = (state) => ({
+  country: state.country,
+});
+
+const mapDispatchToProps = {
+  getCountry,
+  getActivities, // Agrega getActivities al mapDispatchToProps
+  getActivity, // Agrega getActivity al mapDispatchToProps
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Country);

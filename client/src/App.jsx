@@ -3,7 +3,9 @@ import "./App.css";
 import Country from "./pages/Country";
 import Home from "./pages/Home";
 import List from "./pages/List";
+import Form from "./pages/Form";
 import NotFound from "./pages/NotFound";
+
 
 function App() {
   return (
@@ -13,7 +15,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/list" element={<List />} />
-            <Route path="/country:idCode" element={<Country />} />
+            <Route path="/country/:idCode" element={<Country />} />
+            <Route path="/form" element={<Form/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
