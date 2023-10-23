@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCountries, setCurrentPage } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../redux-hooks.js";
 import style from "./List.module.css";
@@ -8,18 +8,25 @@ import Card from "../components/card/Card";
 import SideBar from "../components/sideBar/sideBar";
 
 function List() {
+  const [paginatedCountries, setPaginatedCountries] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(0);
   const dispatch = useAppDispatch();
-  const countries = useAppSelector((state) => state.countries);
   const currentPage = useAppSelector((state) => state.currentPage);
+  const filteredCountries = useAppSelector((state) => state.filteredCountries);
 
   useEffect(() => {
     dispatch(getCountries());
   }, [dispatch]);
 
   const itemsPerPage = 10;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedCountries = countries.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    console.log({ currentPage, startIndex, endIndex, filteredCountries });
+    setStartIndex((currentPage - 1) * itemsPerPage);
+    setEndIndex(startIndex + itemsPerPage);
+    setPaginatedCountries(filteredCountries.slice(startIndex, endIndex))
+  }, [filteredCountries, startIndex, endIndex, currentPage]);
 
   const setPage = (page) => {
     dispatch(setCurrentPage(page));
@@ -55,7 +62,7 @@ function List() {
             >
               PREV
             </button>
-            {Array.from({ length: Math.ceil(countries.length / itemsPerPage) }).map((_, index) => (
+            {Array.from({ length: Math.ceil(filteredCountries.length / itemsPerPage) }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setPage(index + 1)}
@@ -66,7 +73,7 @@ function List() {
             ))}
             <button
               onClick={() => setPage(currentPage + 1)}
-              disabled={currentPage === Math.ceil(countries.length / itemsPerPage)}
+              disabled={currentPage === Math.ceil(filteredCountries.length / itemsPerPage)}
             >
               NEXT
             </button>

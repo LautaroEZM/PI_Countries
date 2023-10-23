@@ -1,6 +1,7 @@
 import axios from "axios";
 export const GET_COUNTRIES = "GET_COUNTRIES";
 export const GET_COUNTRY = "GET_COUNTRY";
+export const SET_FILTERED_COUNTRIES = "SET_FILTERED_COUNTRIES";
 export const TOGGLE_FORM = "TOGGLE_FORM";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const GET_ACTIVITIES = "GET_ACTIVITIES";
@@ -15,13 +16,24 @@ export const getCountries = () => {
         type: GET_COUNTRIES,
         payload: response.data,
       });
+      dispatch({
+        type: SET_FILTERED_COUNTRIES,
+        payload: response.data,
+      });
     } catch (error) {
       console.error(error);
     }
   };
 };
 
-
+export const setFilteredCountries = (matches) => {
+  return (dispatch) => {
+    return dispatch({
+      type: "SET_FILTERED_COUNTRIES",
+      payload: matches,
+    });
+  };
+};
 
 export const getCountry = (countryCode) => {
   const endpoint = `http://localhost:3001/countries/${countryCode}`;
@@ -60,17 +72,20 @@ export const getActivity = (countryCode) => {
 };
 
 export const addActivity = (data) => {
-  const endpoint = 'http://localhost:3001/activities';
+  const endpoint = "http://localhost:3001/activities";
   return (dispatch) => {
-    axios.post(endpoint, data).then(({ data }) => {
-      return dispatch({
-        type: 'ADD_ACTIVITY',
-        payload: data,
+    axios
+      .post(endpoint, data)
+      .then(({ data }) => {
+        return dispatch({
+          type: "ADD_ACTIVITY",
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("No se pudo agregar el elemento");
       });
-    }).catch(error => {
-      console.error(error);
-      alert('No se pudo agregar el elemento');
-    });
   };
 };
 
