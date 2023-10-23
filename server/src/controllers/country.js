@@ -1,10 +1,16 @@
-const { Country } = require("../db");
+const { Country, Activity } = require("../db");
 const fs = require("fs");
 const path = require("path");
 
 const getAll = async (req, res) => {
   try {
-    const countries = await Country.findAll();
+    const countries = await Country.findAll({
+      include: {
+        model: Activity,
+        as: 'activities',
+      },
+      order: [["name", "ASC"]],
+    });
     res.json(countries);
   } catch (error) {
     console.log(error);
@@ -18,6 +24,10 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   try {
     const country = await Country.findOne({
+      include: {
+        model: Activity,
+        as: 'activities',
+      },
       where: {
         idCode: req.params.idCode,
       },
@@ -34,9 +44,14 @@ const getById = async (req, res) => {
 
 const getByName = async (req, res) => {
   try {
-    const countries = await Country.findAll();
+    const countries = await Country.findAll({
+      include: {
+        model: Activity,
+        as: 'activities',
+      },
+      order: [["name", "ASC"]],
+    });
     const filteredCountries = countries.filter((country) => {
-      console.log(country.name, req.query.name);
       return country.name.toLowerCase().includes(req.query.name.toLowerCase());
     });
     res.json(filteredCountries);
@@ -52,7 +67,7 @@ const getByName = async (req, res) => {
 const populateDb = async () => {
   try {
     const jsonContent = JSON.parse(
-      fs.readFileSync(path.join(__dirname, "../../api", "db.json")),
+      fs.readFileSync(path.join(__dirname, "../../api", "db.json"))
     );
     const countriesToInsert = jsonContent.countries.map((country) => {
       return {

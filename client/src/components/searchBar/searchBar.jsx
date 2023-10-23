@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../redux-hooks";
+import React from "react";
+import { useAppDispatch } from "../../redux-hooks";
 import CustomButton from "../button/button";
 import styles from "./searchBar.module.css";
 import searchIcon from '../../img/lupa.png';
-import { setFilteredCountries, setCurrentPage } from "../../store/actions";
+import { setCurrentPage, getCountriesByName } from "../../store/actions";
 
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();
-  const countries = useAppSelector((state) => state.countries);
-  
+
 
   const handleSearch = (event) => {
-    const matches = countries.filter(country => country.name.toLowerCase().includes(event.target.value.toLowerCase()))
-    dispatch(setFilteredCountries(matches));
+    dispatch(getCountriesByName(event.target.value));
     dispatch(setCurrentPage(1));
   };
 

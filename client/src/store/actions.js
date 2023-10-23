@@ -1,12 +1,13 @@
 import axios from "axios";
 export const GET_COUNTRIES = "GET_COUNTRIES";
+export const GET_COUNTRIES_BY_NAME = "GET_COUNTRIES_BY_NAME";
 export const GET_COUNTRY = "GET_COUNTRY";
 export const SET_FILTERED_COUNTRIES = "SET_FILTERED_COUNTRIES";
-export const TOGGLE_FORM = "TOGGLE_FORM";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const GET_ACTIVITIES = "GET_ACTIVITIES";
 export const GET_ACTIVITY = "GET_ACTIVITY";
 export const ADD_ACTIVITY = "ADD_ACTIVITY";
+export const SORT_COUNTRIES = "SORT_COUNTRIES";
 
 export const getCountries = () => {
   return async (dispatch) => {
@@ -14,6 +15,26 @@ export const getCountries = () => {
       const response = await axios.get("http://localhost:3001/countries");
       dispatch({
         type: GET_COUNTRIES,
+        payload: response.data,
+      });
+      dispatch({
+        type: SET_FILTERED_COUNTRIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const getCountriesByName = (name) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/countries/name?name=${name}`
+      );
+      dispatch({
+        type: GET_COUNTRIES_BY_NAME,
         payload: response.data,
       });
       dispatch({
@@ -82,9 +103,9 @@ export const addActivity = (data) => {
           payload: data,
         });
       })
-      .catch((error) => {
-        console.error(error);
-        alert("No se pudo agregar el elemento");
+      .catch((e) => {
+        console.log(e);
+        alert(e.response.data.error);
       });
   };
 };
@@ -98,10 +119,13 @@ export const setCurrentPage = (page) => {
   };
 };
 
-export const toggleForm = () => {
+export const sortCountries = (sortType, sort) => {
   return (dispatch) => {
+    
     return dispatch({
-      type: "TOGGLE_FORM",
+      type: "SORT_COUNTRIES",
+      payload: {sortType, sort},
     });
   };
 };
+

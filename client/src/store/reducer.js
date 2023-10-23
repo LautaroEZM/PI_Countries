@@ -1,11 +1,12 @@
 import {
   GET_COUNTRIES,
+  GET_COUNTRIES_BY_NAME,
   SET_FILTERED_COUNTRIES,
   SET_CURRENT_PAGE,
   GET_COUNTRY,
   GET_ACTIVITY,
   GET_ACTIVITIES,
-  TOGGLE_FORM,
+  SORT_COUNTRIES,
 } from "./actions";
 
 const initialState = {
@@ -16,11 +17,11 @@ const initialState = {
   activity: {},
   currentPage: 1,
   itemsPerPage: 10,
-  visibleForm: false,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_COUNTRIES_BY_NAME:
     case GET_COUNTRIES:
       return { ...state, countries: action.payload };
     case GET_COUNTRY:
@@ -33,8 +34,27 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, activity: action.payload };
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload };
-    case TOGGLE_FORM:
-      return { ...state, visibleForm: !state.visibleForm };
+    case SORT_COUNTRIES:
+      let sortedCountries = [...state.filteredCountries]; // Crear una nueva matriz copiando los países filtrados
+      if (action.payload.sortType === "name") {
+        sortedCountries = sortedCountries.sort((a, b) => {
+          if (action.payload.sort === "asc") {
+            return a.name.localeCompare(b.name);
+          } else {
+            return b.name.localeCompare(a.name);
+          }
+        });
+      } else if (action.payload.sortType === "population") {
+        sortedCountries = sortedCountries.sort((a, b) => {
+          if (action.payload.sort === "asc") {
+            return a.population - b.population;
+          } else {
+            return b.population - a.population;
+          }
+        });
+      }
+      return { ...state, filteredCountries: sortedCountries };
+
     default:
       return { ...state };
   }
