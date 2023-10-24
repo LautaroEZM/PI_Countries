@@ -19,7 +19,7 @@ const createActivity = async (req, res) => {
       name: req.body.name,
       difficulty: req.body.difficulty,
       duration: req.body.duration,
-      season: req.body.season,
+      seasons: req.body.seasons?.length ? req.body.seasons.join(", ") : null,
     });
 
     await record.setCountries(req.body.countries);
