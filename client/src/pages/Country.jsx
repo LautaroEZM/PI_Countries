@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import style from './Country.module.css';
-import { getCountry, getActivities, getActivity } from '../store/actions'; // Importa getActivities y getActivity
+import { getCountry, getActivities, getActivity } from '../store/actions';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../components/button/button';
 
@@ -13,12 +13,21 @@ const Country = ({ country, getCountry, getActivities, getActivity }) => {
   useEffect(() => {
     if (idCode) {
       getCountry(idCode);
-      getActivities(); // Llama a getActivities para obtener la lista de actividades
-      getActivity(idCode); // Llama a getActivity para obtener detalles de la actividad para el país
+      getActivities();
+      getActivity(idCode);
     }
   }, [idCode, getCountry, getActivities, getActivity]);
 
   const handleHomeClick = () => navigate('/list');
+
+  // Función para mostrar "Not Specified" en caso de capital vacía
+  const renderCapital = () => {
+    if (country.capital && country.capital.trim() !== '') {
+      return country.capital;
+    } else {
+      return 'Not Specified';
+    }
+  };
 
   return country && (
     <div className={style.container}>
@@ -28,7 +37,7 @@ const Country = ({ country, getCountry, getActivities, getActivity }) => {
           <div className={style.textContainer}>
             <div><b>Country Code:</b> {country.idCode}</div>
             <div><b>Continent:</b> {country.continent}</div>
-            <div><b>Capital:</b> {country.capital}</div>
+            <div><b>Capital:</b> {renderCapital()}</div> {/* Utiliza la función renderCapital */}
             <div><b>Subregion:</b> {country.subregion ? country.subregion : 'Not specified'}</div>
             <div><b>Area:</b> {country.area ? country.area : 'Not specified'}</div>
             <div><b>Population:</b> {country.population}</div>
@@ -44,8 +53,6 @@ const Country = ({ country, getCountry, getActivities, getActivity }) => {
                 )}
               </ul>
             </div>
-
-
           </div>
         </div>
         <div className={style.rightContainer}>
@@ -63,8 +70,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getCountry,
-  getActivities, // Agrega getActivities al mapDispatchToProps
-  getActivity, // Agrega getActivity al mapDispatchToProps
+  getActivities,
+  getActivity,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Country);

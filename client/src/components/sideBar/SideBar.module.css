@@ -1,5 +1,6 @@
 .fatherContainer{
     border: 2px solid green;
+    height: 100%;
 }
 
 .homeButton {
@@ -29,4 +30,13 @@
   
   .homeButton span {
     display: inline-block;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }

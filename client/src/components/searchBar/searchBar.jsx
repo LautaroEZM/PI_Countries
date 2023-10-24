@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppDispatch } from "../../redux-hooks";
 import CustomButton from "../button/button";
 import styles from "./searchBar.module.css";
 import searchIcon from '../../img/lupa.png';
 import { setCurrentPage, getCountriesByName } from "../../store/actions";
 
-
-const SearchBar = () => {
+const SearchBar = ({ onClearClick }) => { // Añade una prop 'onClearClick'
   const dispatch = useAppDispatch();
-
+  const [searchValue, setSearchValue] = useState(""); 
 
   const handleSearch = (event) => {
-    dispatch(getCountriesByName(event.target.value));
+    const newValue = event.target.value;
+    setSearchValue(newValue);
+    dispatch(getCountriesByName(newValue));
     dispatch(setCurrentPage(1));
   };
 
-
-  const handleButtonClick = () => {
-    console.log("Botón de búsqueda clickeado");
+  const handleClearClick = () => {
+    setSearchValue("");
+    onClearClick(); // Llama a la función de devolución de llamada para limpiar en List
   };
 
   return (
@@ -27,11 +28,12 @@ const SearchBar = () => {
           className={styles.textArea}
           placeholder={"Select a country..."}
           type="search"
+          value={searchValue}
           onChange={handleSearch}
         />
         <CustomButton
-          content={<img src={searchIcon} alt="Search" style={{ width: "20px", height: "20px" }} />}
-          onClick={handleButtonClick}
+          content={"x"}
+          onClick={handleClearClick}
         />
       </div>
     </div>

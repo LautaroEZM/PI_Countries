@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCountries, setCurrentPage } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../redux-hooks.js";
 import style from "./List.module.css";
@@ -22,14 +22,18 @@ function List() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    console.log({ currentPage, startIndex, endIndex, filteredCountries });
     setStartIndex((currentPage - 1) * itemsPerPage);
     setEndIndex(startIndex + itemsPerPage);
-    setPaginatedCountries(filteredCountries.slice(startIndex, endIndex))
+    setPaginatedCountries(filteredCountries.slice(startIndex, endIndex));
   }, [filteredCountries, startIndex, endIndex, currentPage]);
 
   const setPage = (page) => {
     dispatch(setCurrentPage(page));
+  };
+
+  const handleClearClick = () => {
+    dispatch(setCurrentPage(1));
+    dispatch(getCountries()); 
   };
 
   return (
@@ -37,7 +41,7 @@ function List() {
       <div className={style.topContainer}>
         <div className={style.coloredDiv}></div>
         <div className={style.coloredDiv}>
-          <SearchBar />
+          <SearchBar onClearClick={handleClearClick} />
         </div>
         <div className={style.coloredDivRight}>
           <OrderButtons />
@@ -55,33 +59,38 @@ function List() {
               ))}
             </div>
           </div>
-          <div className={style.pagination}>
-            <button
-              onClick={() => setPage(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              PREV
-            </button>
-            {Array.from({ length: Math.ceil(filteredCountries.length / itemsPerPage) }).map((_, index) => (
+          {filteredCountries.length > 0 ? ( // Mostrar el mensaje si hay elementos disponibles
+            <div className={style.pagination}>
               <button
-                key={index}
-                onClick={() => setPage(index + 1)}
-                className={currentPage === index + 1 ? style.active : ''}
+                onClick={() => setPage(currentPage - 1)}
+                disabled={currentPage === 1}
               >
-                {index + 1}
+                PREV
               </button>
-            ))}
-            <button
-              onClick={() => setPage(currentPage + 1)}
-              disabled={currentPage === Math.ceil(filteredCountries.length / itemsPerPage)}
-            >
-              NEXT
-            </button>
-          </div>
+              {Array.from({ length: Math.ceil(filteredCountries.length / itemsPerPage) }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setPage(index + 1)}
+                  className={currentPage === index + 1 ? style.active : ''}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => setPage(currentPage + 1)}
+                disabled={currentPage === Math.ceil(filteredCountries.length / itemsPerPage)}
+              >
+                NEXT
+              </button>
+            </div>
+          ) : ( // Mostrar el mensaje si no hay elementos disponibles
+            <div className={style.pagination}>No elements available</div>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
 
 export default List;

@@ -9,6 +9,8 @@ export default function Card({ country }) {
     setIsImageExpanded(!isImageExpanded);
   };
 
+  const capital = country.capital || "Not Specified"; // Si la capital está vacía, muestra "Not Specified"
+
   return (
     <div className={style.card} key={country.idCode}>
       <div className={style.imgContainer}>
@@ -23,8 +25,8 @@ export default function Card({ country }) {
         <Link to={`/country/${country.idCode}`}>
           <div className={style.textName}>{country.name.toUpperCase()}</div>
         </Link>
-        <div className={style.textStatus}>{`${country.capital}`}</div>
-        <div className={style.textStatus}>{`${country.continent}`}</div>
+        <div className={style.textStatus}>{capital}</div> {/* Muestra la capital o "Not Specified" */}
+        <div className={style.textStatus}>{country.continent}</div>
         <div className={style.botContainer}></div>
       </div>
       {isImageExpanded && (
