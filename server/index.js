@@ -4,7 +4,7 @@ const { populateDb } = require('./src/controllers/country.js')
 const PORT = 3001;
 
 
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   populateDb().then(() => {
     server.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);

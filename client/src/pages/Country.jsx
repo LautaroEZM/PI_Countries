@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import style from './Country.module.css';
@@ -18,7 +18,20 @@ const Country = ({ country, getCountry, getActivities, getActivity }) => {
     }
   }, [idCode, getCountry, getActivities, getActivity]);
 
+  const [showActivityDetails, setShowActivityDetails] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState(null);
+
   const handleHomeClick = () => navigate('/list');
+
+  const handleActivityClick = (activity) => {
+    setSelectedActivity(activity);
+    setShowActivityDetails(true);
+  };
+
+  const handleDetailsClose = () => {
+    setSelectedActivity(null);
+    setShowActivityDetails(false);
+  };
 
   // Función para mostrar "Not Specified" en caso de capital vacía
   const renderCapital = () => {
@@ -46,7 +59,9 @@ const Country = ({ country, getCountry, getActivities, getActivity }) => {
               <ul>
                 {Array.isArray(country.activities) ? (
                   country.activities.map((activity, index) => (
-                    <li key={index}>{activity.name}</li>
+                    <li key={index}>
+                      <CustomButton onClick={() => handleActivityClick(activity)} content={activity.name} />
+                    </li>
                   ))
                 ) : (
                   <li>No activities available.</li>
@@ -59,6 +74,15 @@ const Country = ({ country, getCountry, getActivities, getActivity }) => {
           <img className={style.imgFlag} src={country.imageFlag} alt={country.name} />
         </div>
       </div>
+      {showActivityDetails && selectedActivity && (
+        <div className={style.activityDetails}>
+          <h3>Activity Details</h3>
+          <p><b>Name:</b> {selectedActivity.name}</p>
+          <p><b>Difficulty:</b> {selectedActivity.difficulty}</p>
+          <p><b>Seasons:</b> {selectedActivity.seasons}</p>
+          <CustomButton onClick={handleDetailsClose} content="CLOSE" />
+        </div>
+      )}
       <CustomButton onClick={handleHomeClick} content="BACK" />
     </div>
   );

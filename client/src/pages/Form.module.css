@@ -92,8 +92,23 @@
 .btnSearch:hover {
   background-color: rgb(228, 175, 28);
   transition: background-color 0.4s;
+  border: none;
 }
 
 .btnSearch:active {
   background-color: rgb(140, 109, 25);
+  border: none;
+}
+
+.errorSpan {
+  color: red;
+  font-size: 10px;
+}
+
+.disabledButton {
+  background-color: #ccc; /* Cambia el color de fondo a un color deshabilitado */
+  color: #888; /* Cambia el color del texto a un color deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor a "no permitido" */
+  pointer-events: none; /* Evita interacciones con el botón */
+  /* Agrega cualquier otro estilo que desees para indicar que el botón está deshabilitado */
 }
