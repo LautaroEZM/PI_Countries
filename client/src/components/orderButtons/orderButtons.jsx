@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { useAppDispatch } from "../../redux-hooks";
 import CustomButton from "../button/button";
 import styles from "./orderButtons.module.css";
-import { sortCountries } from "../../store/actions";
 import up from "../../img/up.png"
 import down from "../../img/down.png"
 import pop from "../../img/population.png"
-import arrow from "../../img/arrow.png"
 
 const OrderButtons = () => {
   const [sortName, setSortName] = useState("asc");
@@ -14,14 +12,17 @@ const OrderButtons = () => {
 
   const dispatch = useAppDispatch();
 
+  // Manejar la ordenación por tipo (nombre o población)
   const handleSort = (sortType) => {
     if (sortType === 'name') {
-      const sort = sortName === "asc" ? "desc" : "asc"
+      const sort = sortName === "asc" ? "desc" : "asc";
       setSortName(sort);
+      // Disparar la acción para ordenar los países por nombre
       dispatch(sortCountries(sortType, sort));
     } else if (sortType === 'population') {
-      const sort = sortPopulation === "asc" ? "desc" : "asc"
+      const sort = sortPopulation === "asc" ? "desc" : "asc";
       setSortPopulation(sort);
+      // Disparar la acción para ordenar los países por población
       dispatch(sortCountries(sortType, sort));
     }
   };

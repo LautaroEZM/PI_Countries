@@ -1,37 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../redux-hooks';
 import { useParams } from 'react-router-dom';
 import style from './Country.module.css';
-import { getCountry, getActivities, getActivity } from '../store/actions';
+import { getCountry, getActivities, getActivity, clearCountry } from '../store/actions';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../components/button/button';
 
-const Country = ({ country, getCountry, getActivities, getActivity }) => {
+const Country = () => {
+  // Obtener el parámetro de la URL usando useParams()
   const { idCode } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const country = useAppSelector((state) => state.country);
 
+  // Efecto secundario que se ejecuta cuando idCode cambia
   useEffect(() => {
     if (idCode) {
-      getCountry(idCode);
-      getActivities();
-      getActivity(idCode);
+      // Despacha acciones para obtener información del país y actividades
+      dispatch(getCountry(idCode));
+      dispatch(getActivities());
+      dispatch(getActivity(idCode));
     }
   }, [idCode, getCountry, getActivities, getActivity]);
 
+  // Estados locales para el manejo de detalles de actividad
   const [showActivityDetails, setShowActivityDetails] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
 
-  const handleHomeClick = () => navigate('/list');
-
+  // Función para manejar el clic en el botón "BACK"
+  const handleHomeClick = () => {
+    dispatch(clearCountry());
+    navigate('/list'); // Redirige a la lista de países
+  };
+  //funcion para mostrar detalles de actividades
   const handleActivityClick = (activity) => {
     setSelectedActivity(activity);
     setShowActivityDetails(true);
   };
-
+  //Funcion para cerrar los detalles
   const handleDetailsClose = () => {
     setSelectedActivity(null);
     setShowActivityDetails(false);
   };
+
 
   // Función para mostrar "Not Specified" en caso de capital vacía
   const renderCapital = () => {
@@ -88,14 +99,4 @@ const Country = ({ country, getCountry, getActivities, getActivity }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  country: state.country,
-});
-
-const mapDispatchToProps = {
-  getCountry,
-  getActivities,
-  getActivity,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Country);
+export default Country;

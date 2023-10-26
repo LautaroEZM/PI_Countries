@@ -1,0 +1,32 @@
+.btnSearch {
+    background: #2b2d31;
+    width: auto;
+    color: white;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .btnSearch:hover {
+    background-color: rgb(228, 175, 28);
+    transition: background-color 0.4s;
+    border: none;
+  }
+  
+  .btnSearch:active {
+    background-color: rgb(140, 109, 25);
+    border: none;
+  }
+
+  .selectedElement{
+    color: black;
+    background-color:  rgb(228, 175, 28);
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    
+  }
